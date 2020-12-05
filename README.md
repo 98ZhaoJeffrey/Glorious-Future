@@ -5,8 +5,8 @@ Website built to be a centralized hub for marginalized students to get scholarsh
 
 Create a new virtual enviroment by running
 ```python
-python3 -m venv venv
-venv\Scripts\activate.bat
+python3 -m venv [yourVenvName]
+[yourVenvName]\Scripts\activate.bat
 ```
 Install the required packages 
 ```python
