@@ -1,6 +1,8 @@
-from django.shortcuts import HttpResponse
+from django.shortcuts import render
 
 # Create your views here.
 
 def index(request):
-    return HttpResponse("hello world")
+    text = "hello world"
+    context ={'mytext' : text, 'mytext2': text }
+    return render(request, 'userApp/templates/base.html', context)

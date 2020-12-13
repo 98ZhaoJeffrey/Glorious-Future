@@ -64,6 +64,7 @@ class UserInfo(models.Model):
 
     class Meta:
         abstract = True
+        
 class Student(UserInfo):
     firstName = models.CharField(max_length=32, blank = False)
     lastName = models.CharField(max_length=32, blank = False)
