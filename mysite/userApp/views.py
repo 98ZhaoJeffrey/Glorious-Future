@@ -1,8 +1,46 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render, HttpResponse
+from .forms import UserRegisterForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-def index(request):
-    text = "hello world"
-    context ={'mytext' : text, 'mytext2': text }
-    return render(request, 'userApp/templates/base.html', context)
+"""
+test user
+u = User.objects.create_user(username="testname", first_name="firsttest", last_name="lasttest", email="test@email.com", location="Toronto")
+pass = testpassword
+"""
+
+def signup(request):
+    """
+    Allows the user to signup for the website service as either a student or an organization
+
+    **Template:**
+
+    :template:`registration/signup.html`
+
+    """
+    if request.user.is_authenticated:
+        return redirect('index')
+    else:  
+        context = {}
+        if request.method == 'POST':
+            form = UserRegisterForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('about')
+        form = UserRegisterForm()
+        return render(request, 'registration/signup.html', {'form': form})
+
+@login_required(login_url='login')
+def logout(request):
+    logout(request)
+    return redirect('login')
+
+@login_required(login_url='login')
+def search(request):
+    pass
+
+@login_required(login_url='login')
+def profile(request):
+    return redirect('about')

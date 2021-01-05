@@ -9,28 +9,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
     <title>{% block title %}{% endblock %}</title>
 </head>
-
 {% endblock %}
+
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background-color: #58a5e4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="{% url 'index' %}">Glorious Future</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav" style="align-items: center;">
             <li class="nav-item">
-              <a class="nav-link active text-white"  href="#">Example1</a>
+              <a class="nav-link active text-white"  href="{% url 'login' %}">Login</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active text-white" href="#">Example2</a>
+              <a class="nav-link active text-white" href="{% url 'signup' %}">Sign Up</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active text-white" href="#" >Example3</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active text-white" href="#" >Example4</a>
+              <a class="nav-link active text-white" href="{% url 'about' %}">About</a>
             </li>
           </ul>
         </div>
