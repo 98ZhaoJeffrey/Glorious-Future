@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+.form-group{
+    margin: 20px 0px;
+}
+</style>	
+<form action="{% url 'signup' %}" method="POST">
+    {% csrf_token %}
+    <div class="row justify-content-center">
+        <div class="col-md-5 pt-3" style="margin-top: 40px; margin-bottom: 40px">
+            <form class ="pt-3">
+                {{ form|crispy }}
+            </form>
+        <div style= "margin-bottom: 10px;">
+            <a class="forgotPassword text-decoration-none" href="{% url 'login' %}">Already have an account? Login Here!</a>
+        </div>
+        <div class="d-grid gap-4 text-center pt-3">
+            <button class="btn btn-primary" type="submit" value="ok">Login</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    window.onload = (()=>{
+        document.getElementById("div_id_location").style.display = "none";
+    })
+    const toggleSwitch = document.getElementById("id_is_staff");
+    toggleSwitch.onclick = (() => 
+        {
+            const lastName = document.getElementById("div_id_last_name");
+            const location = document.getElementById("div_id_location");
+            if(toggleSwitch.checked){
+                lastName.style.display = "none";
+                location.style.display = "block";
+            }
+            else{
+                lastName.style.display = "block";
+                location.style.display = "none";
+            }
+        }
+    )
+</script>
+{% endblock %}
+
