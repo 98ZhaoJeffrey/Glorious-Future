@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content%}
+
+<form>
+    {% csrf_token %}
+    <div class="container" style="width:40%">
+        <div class="mb-3">
+            <label for="Title" class="form-label">Title of Post</label>
+            <input type="text" class="form-control" id="Title" placeholder="Title" required>
+        </div>
+        <div class="mb-3">
+            <label for="Description" class="form-label">Description(Max 500 chars)</label>
+            <textarea class="form-control" id="Description" rows="3" maxlength="500"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="due-date" class="form-label">Deadline of Scholarship</label>
+            <input type="datetime-local" class="form-control" id="due-date">
+        </div>
+        <div class="mb-3">
+            <label for="Image" class="form-label">Image for the Post</label>
+            <input type="file" class="form-control" id="Image" accept="image/*">
+        </div>
+        <div class="d-grid gap-2 d-md-flex">
+            <button class="btn btn-primary" style="width:50%">Submit Post</button>
+            <a href="https://twitter.com/" role="button" class="btn btn-outline-primary" style="width:50%; overflow: hidden;" target="_blank">Need a form? Create One!</a>
+        </div>
+    </div>
+   
+</form>
+{% endblock %}

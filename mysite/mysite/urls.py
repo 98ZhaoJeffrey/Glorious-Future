@@ -22,4 +22,5 @@ urlpatterns = [
     path('accounts/', include('userApp.urls')),
     path('', views.index, name='index'),
     path('about/', views.about, name='about'),
+    path('post/', include('post.urls'))
 ]

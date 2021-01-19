@@ -1,6 +1,6 @@
-from django.shortcuts import redirect, render, HttpResponse
+from django.shortcuts import redirect, render
 from .forms import UserRegisterForm
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -23,12 +23,11 @@ def signup(request):
     if request.user.is_authenticated:
         return redirect('index')
     else:  
-        context = {}
         if request.method == 'POST':
             form = UserRegisterForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('about')
+                return redirect('login')
         form = UserRegisterForm()
         return render(request, 'registration/signup.html', {'form': form})
 
@@ -36,10 +35,6 @@ def signup(request):
 def logout(request):
     logout(request)
     return redirect('login')
-
-@login_required(login_url='login')
-def search(request):
-    pass
 
 @login_required(login_url='login')
 def profile(request):

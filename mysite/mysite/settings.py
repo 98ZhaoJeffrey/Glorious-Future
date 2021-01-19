@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+from dotenv import load_dotenv
+load_dotenv()
 from pathlib import Path
 import os
 
@@ -40,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'userApp.apps.UserappConfig',
-    'crispy_forms'
+    'post.apps.PostConfig',
+    'crispy_forms',
+    'taggit'
 ]
 
 MIDDLEWARE = [
@@ -58,7 +61,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [''],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -134,6 +137,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')

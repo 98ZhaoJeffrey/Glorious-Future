@@ -1,0 +1,35 @@
+{% extends "base.html"%}
+
+{% block icons%}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block content %}
+<body>
+    <div class="row justify-content-center">
+        <div class="col-md-5 pt-3" style="margin-top: 40px; margin-bottom: 40px">
+            <div class="mb-3">
+                <label for="formTextarea" class="form-label">Question1Title</label>
+                <p class="question-text text-muted"><small>description1 goes here</small></p>
+                <textarea class="form-control" id="formTextarea" rows="3"></textarea>
+              </div>
+        
+              <div class="mb-3">
+                <label for="formTextarea" class="form-label">Question2Title</label>
+                <p class="question-text text-muted"><small>description2 goes here</small></p>
+                <textarea class="form-control" id="formTextarea" rows="3"></textarea>
+              </div>
+              
+              <div class="mb-3">
+                <label for="formTextarea" class="form-label">Question3Title</label>
+                <p class="question-text text-muted"><small>description3 goes here</small></p>
+                <textarea class="form-control" id="formTextarea" rows="3"></textarea>
+              </div>
+
+              <input class="btn btn-primary" type="submit" value="Submit">
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}
+

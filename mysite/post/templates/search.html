@@ -1,0 +1,40 @@
+{% extends "base.html"%}
+
+{% block icons%}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block content %}
+  <p>
+  {{result}}
+  </p>
+  <form method="GET" action="{% url 'search' %}">
+    {% csrf_token %}
+    <div class="container">
+      <div class="row" style="margin: 32px 0px;">
+          <div class="input-group mb-3 pt-3"  >
+            <input style="height: 50px" type="text" class="form-control" id="searchFormInput" placeholder="Search">
+            <span class="input-group-append">
+              <button style="height: 50px; width: 50px" class="btn btn-outline-primary" type="submit" value="ok">
+                  <i class="fa fa-search"></i>
+              </button>
+            </span>
+            <div class="dropdown" >
+              <select class="form-select" aria-label="Default select example" style="height: 50px;">
+                <option selected>----------</option>
+                <option value="Everyone">Everyone</option>
+                <option value="Black">Black</option>
+                <option value="Hispanic">Hispanic</option>
+                <option value="Female">Female</option>
+                <option value="Immigrants">Immigrants</option>
+                <option value="LGBT">LGBT</option>
+                <option value="Disabled">Disabled</option>
+                <option value="Poor">Poor</option>
+              </select>
+            </div>
+            </div>
+      </div>
+  </form>
+</div>
+
+{% endblock %}
