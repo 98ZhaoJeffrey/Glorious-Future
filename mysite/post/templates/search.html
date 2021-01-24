@@ -5,24 +5,16 @@
 {% endblock %}
 
 {% block content %}
-  <p>
-  {{result}}
-  </p>
+
   <form method="GET" action="{% url 'search' %}">
-    {% csrf_token %}
     <div class="container">
       <div class="row" style="margin: 32px 0px;">
           <div class="input-group mb-3 pt-3"  >
-            <input style="height: 50px" type="text" class="form-control" id="searchFormInput" placeholder="Search">
-            <span class="input-group-append">
-              <button style="height: 50px; width: 50px" class="btn btn-outline-primary" type="submit" value="ok">
-                  <i class="fa fa-search"></i>
-              </button>
-            </span>
+            <input style="height: 50px" type="text" class="form-control" id="searchFormInput" name="query" placeholder="{%if query%}{{query}}{%else%}Search{% endif %}">
+
             <div class="dropdown" >
-              <select class="form-select" aria-label="Default select example" style="height: 50px;">
-                <option selected>----------</option>
-                <option value="Everyone">Everyone</option>
+              <select class="form-select" aria-label="Default select example" name="filter" style="height: 50px;">
+                <option selected value="Everyone">{%if filter%}{{filter}}{%else%}Everyone{% endif %}</option>
                 <option value="Black">Black</option>
                 <option value="Hispanic">Hispanic</option>
                 <option value="Female">Female</option>
@@ -32,9 +24,67 @@
                 <option value="Poor">Poor</option>
               </select>
             </div>
+            <div class="dropdown">
+              <select class="form-select" aria-label="Default select example" name="sortby" style="height: 50px;">
+                <option selected value="Default">{%if sortby%}{{sortby}}{%else%}Everyone{% endif %}</option>
+                <option value="Title(A-Z)">Title(A-Z)</option>
+                <option value="Title(Z-A)">Title(Z-A)</option>
+                <option value="Value Decreasing">Value Decreasing</option>
+                <option value="Value Increasing">Value Increasing</option>
+                <option value="Due Date">Due Date</option>
+              </select>
+            </div>            
+            <span class="input-group-append">
+              <button style="height: 50px; width: 50px" class="btn btn-outline-primary" type="submit" value="ok">
+                  <i class="fa fa-search"></i>
+              </button>
+            </span>
             </div>
       </div>
   </form>
+
+  <div class="container-fluid">  
+    <h3>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }} Results</h3> 
+    <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4" style="grid-gap: 1.5rem; justify-content: space-around;">
+      {% for post in result %}
+        <div class="card" style="width: 18rem;">
+          <img src="https://www.buildagrad.ca/content/v2/images/johnfraser/johnfraser_logo.png" class="card-img-top" width="250" height="250">
+          <div class="card-body">
+            <h5 class="card-title">{{post.title}}</h5> 
+              <span class="badge bg-primary">tag1</span>
+              <span class="badge bg-primary">tag2</span>
+              <span class="badge bg-primary">tag3</span>
+              <p class="card-text">Total value: ${{post.value}}</p>
+              <p class="card-text">{{post.description}}</p>
+            <a href="#" class="btn btn-primary" style="display:block">Click to apply</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <nav aria-label="Page navigation example" style="margin-top:4rem">
+    <ul class="pagination pagination-lg justify-content-center">
+      <li class="page-item">
+        <a class="page-link" href="?{%if query%}query={{query}}&{% endif %}{%if filter%}filter={{filter}}&{% endif %}{%if sortby%}sortby={{sortby}}&{% endif %}page=1" aria-label="Previous">
+          <span aria-hidden="true"> &laquo; First</span>
+        </a>
+      </li>
+      {% if page_obj.has_previous %}  
+        <li class="page-item"><a class="page-link" href="?{%if query%}query={{query}}&{% endif %}{%if filter%}filter={{filter}}&{% endif %}{%if sortby%}sortby={{sortby}}&{% endif %}page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+      {% endif %}
+      <li class="page-item active"><a class="page-link " href="?{%if query%}query={{query}}&{% endif %}{%if filter%}filter={{filter}}&{% endif %}{%if sortby%}sortby={{sortby}}&{% endif %}page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+      {% if page_obj.has_next %}  
+        <li class="page-item"><a class="page-link" href="?{%if query%}query={{query}}&{% endif %}{%if filter%}filter={{filter}}&{% endif %}{%if sortby%}sortby={{sortby}}&{% endif %}page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+      {% endif %}
+      <li class="page-item">
+        <a class="page-link" href="?{%if query%}query={{query}}&{% endif %}{%if filter%}filter={{filter}}&{% endif %}{%if sortby%}sortby={{sortby}}&{% endif %}page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+          <span aria-hidden="true">Last &raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
 </div>
 
 {% endblock %}

@@ -2,10 +2,15 @@
 
 
 {% block content%}
-
+<style>
+    .mb-3{
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+</style>
 <form>
     {% csrf_token %}
-    <div class="container" style="width:40%">
+    <div class="container" style="width:40%; margin-top:40px">
         <div class="mb-3">
             <label for="Title" class="form-label">Title of Post</label>
             <input type="text" class="form-control" id="Title" placeholder="Title" required>
@@ -22,7 +27,7 @@
             <label for="Image" class="form-label">Image for the Post</label>
             <input type="file" class="form-control" id="Image" accept="image/*">
         </div>
-        <div class="d-grid gap-2 d-md-flex">
+        <div class="d-grid gap-2 d-md-flex" style="justify-content: space-around; margin-top:40px;">
             <button class="btn btn-primary" style="width:50%">Submit Post</button>
             <a href="https://twitter.com/" role="button" class="btn btn-outline-primary" style="width:50%; overflow: hidden;" target="_blank">Need a form? Create One!</a>
         </div>

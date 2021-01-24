@@ -87,12 +87,12 @@ DATABASES = {
             'user':'testuser',
             'password':'testpassword123',
             'host': 'localhost',
-            'port': 3306,
+            'port': 3306
         },
     }
 }
 
-
+TAGGIT_CASE_INSENSITIVE = True
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 

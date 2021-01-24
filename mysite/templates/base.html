@@ -22,29 +22,34 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
           <ul class="nav navbar-nav" style="align-items: center;">
             {% if user.is_authenticated %}
-            <li class="nav-item">
-              {% if user.is_staff %}
-              <a class="nav-link active text-white"  href="{% url 'post' %}">Post</a>
-              {% else %}
-              <a class="nav-link active text-white"  href="{% url 'search' %}">Search</a>
+              {% if user.is_superuser %}
+              <li class="nav-item">
+                <a class="nav-link active text-white"  href="{% url 'search' %}">Search</a>
+              </li>
               {% endif %}
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active text-white" href="{% url 'logout' %}">Logout</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active text-white" href="{% url 'profile' %}">Profile</a>
-            </li>
-            {% else %}
-            <li class="nav-item">
-              <a class="nav-link active text-white"  href="{% url 'login' %}">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active text-white" href="{% url 'signup' %}">Sign Up</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active text-white" href="{% url 'about' %}">About</a>
-            </li>
+              <li class="nav-item">
+                {% if user.is_staff %}
+                <a class="nav-link active text-white"  href="{% url 'post' %}">Post</a>
+                {% else %}
+                <a class="nav-link active text-white"  href="{% url 'search' %}">Search</a>
+                {% endif %}
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'logout' %}">Logout</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'profile' %}">Profile</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link active text-white"  href="{% url 'login' %}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'signup' %}">Sign Up</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active text-white" href="{% url 'about' %}">About</a>
+              </li>
             {% endif %}
           </ul>
         </div>
