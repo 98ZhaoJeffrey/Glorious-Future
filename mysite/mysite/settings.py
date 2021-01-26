@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'userApp.apps.UserappConfig',
     'post.apps.PostConfig',
     'crispy_forms',
-    'taggit'
+    'taggit',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -134,11 +135,14 @@ LOGOUT_REDIRECT_URL = 'index'
 
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/images/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
+MEDIA_URL = "/media/"
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+

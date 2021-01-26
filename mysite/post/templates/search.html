@@ -1,4 +1,5 @@
 {% extends "base.html"%}
+{% load static %}
 
 {% block icons%}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -47,8 +48,8 @@
     <h3>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }} Results</h3> 
     <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4" style="grid-gap: 1.5rem; justify-content: space-around;">
       {% for post in result %}
-        <div class="card" style="width: 18rem;">
-          <img src="https://www.buildagrad.ca/content/v2/images/johnfraser/johnfraser_logo.png" class="card-img-top" width="250" height="250">
+        <div class="card" style="width: 18rem; padding:0px">
+          <img src="/media/{{post.photo}}" class="card-img-top" style="width:100%; height:250px;">
           <div class="card-body">
             <h5 class="card-title">{{post.title}}</h5> 
               <span class="badge bg-primary">tag1</span>
@@ -56,7 +57,7 @@
               <span class="badge bg-primary">tag3</span>
               <p class="card-text">Total value: ${{post.value}}</p>
               <p class="card-text">{{post.description}}</p>
-            <a href="#" class="btn btn-primary" style="display:block">Click to apply</a>
+              <a href="{{post.link}}" class="btn btn-primary" style="display:block;" target="_blank">Click to apply</a>
           </div>
         </div>
       {% endfor %}
