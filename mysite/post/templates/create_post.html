@@ -13,21 +13,6 @@
     }
 </style>
 
-{% if form.errors %}
-    {% for field in form %}
-        {% for error in field.errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-{% endif %}
-
 <form method="post" action="{% url 'post' %}">
     {% csrf_token %}
     <div class="container" style="width:40%; margin-top:40px">            
@@ -36,7 +21,7 @@
         </div>
         <div class="d-grid gap-2 d-md-flex" style="justify-content: space-around; margin-top:40px;">
             <button class="btn btn-primary" style="width:50%" type="submit">Submit Post</button>
-            <a href="https://twitter.com/" role="button" class="btn btn-outline-primary" style="width:50%; overflow: hidden;" target="_blank">Need a form? Create One!</a>
+            <a href="{% url 'form'%}" role="button" class="btn btn-outline-primary" style="width:50%; overflow: hidden;" target="_blank">Need a form? Create One!</a>
         </div>
     </div> 
 </form>

@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.shortcuts import redirect, render
 from django.db.models import Q
-from .models import Post
-from .forms import PostForm
+from .models import Post, Form, Response
+from .forms import PostForm, QuestionFormForm
 from django.contrib.auth.decorators import login_required 
 from django.contrib.admin.views.decorators import staff_member_required, user_passes_test
 from django.core.paginator import Paginator
@@ -44,19 +44,26 @@ def search(request):
 
 @login_required(login_url='login')
 @user_passes_test(can_view_post)
-def submitForm(request):
-    context = {}
-    id = request.GET.get('uuid', '')
-    try:
-        post = Post.objects.get(UUID=id)
-        context['post'] = post
-        return render(request, 'scholarship.html', context=context) 
-    except:
+def submitForm(request,formcode=None):
+    if formcode:    
+        if request.method == 'POST':
+            answer1 = request.POST.get('answer1', '')
+            answer2 = request.POST.get('answer2', '')
+            answer3 = request.POST.get('answer3', '')
+            user = request.user
+            if len(Response.objects.filter(user_id=user, form_id=formcode)) == 0:            
+                form = Response(answer1=answer1, answer2=answer2, answer3=answer3, user=user, form_id=formcode)
+                form.save()
+        questionForm = get_object_or_404(Form,UUID=formcode)
+        #postForm = Post.objects.filter(Q(link__icontains=formcode))[0]
+        context = {'form': questionForm, 'UUID': formcode}
+        return render(request, 'response.html', context=context) 
+    else:
         return redirect(search)
 
 @login_required(login_url='login')
 @staff_member_required
-#make a post card
+#make a scholarship post
 def createPost(request):
     if request.method == 'POST':
         form = PostForm(request.user, request.POST, request.FILES)
@@ -72,4 +79,12 @@ def createPost(request):
 @staff_member_required
 # make a form linked to the post
 def createForm(request):
-    pass
+    if request.method == 'POST':
+        form = QuestionFormForm(request.POST)
+        if form.is_valid():
+            formID = form.save().UUID
+            context = {'id': formID}
+            return redirect('search')
+    form = QuestionFormForm()
+    context = {'form': form}
+    return render(request, 'scholarship.html', context=context)

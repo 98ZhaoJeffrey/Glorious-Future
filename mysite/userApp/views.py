@@ -38,4 +38,7 @@ def logout(request):
 
 @login_required(login_url='login')
 def profile(request):
+    if(request.user.is_staff):
+        #gett all posts they had and let them download those results, add delete as well
+        pass
     return redirect('about')

@@ -34,3 +34,5 @@ urlpatterns += [
         url(r'^media/(?P<path>.*)$', django.views.static.serve, {
         'document_root': settings.MEDIA_ROOT})
     ]
+
+#handler404 = 'mysite.views.handle404page'

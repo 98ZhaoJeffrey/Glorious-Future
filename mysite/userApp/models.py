@@ -9,3 +9,7 @@ class User(AbstractUser):
     def __str__(self):
         return self.get_username()
 
+    def can_view_post(self):
+        #only students and admins may use the search, submitForm functions
+        return (not bool(self.is_staff) or self.is_superuser)
+
