@@ -13,12 +13,43 @@ from userApp.models import *
 # Create your views here.
 
 def can_view_post(user):
+    """Determines who can access the search bar
+
+    Args:
+        User
+    Returns:
+        Boolean: True if student or admin, false if organization
+    """
     #only students and admins may use the search, submitForm functions
     return (not bool(user.is_staff) or user.is_superuser)
 
 @login_required(login_url='login')
 @user_passes_test(can_view_post)
 def search(request):
+    """
+    Allow students to search for a scholarship with a search engine
+
+    **Context**
+        result: All of the posts that fall under the restrictions the user has provided
+        page_obj: All of the posts on that specific page number
+        query: Used to put inside the searchbar when we change pages
+        filter: Used to put inside the filter dropdown when we change pages
+        sortby: Used to put inside the sorts dropdown when we change pages
+
+        ``query ``
+            The argument for what we should search for
+        ``Filter``
+            Filters out what posts are relevant to the person's needs
+        ``sortby``
+            The sorting rule for the posts
+        ``pagenum``
+            The page number that we should be on
+
+    **Template:**
+        :template:`search.html`
+
+    """
+
     filterList = ['everyone', 'black', 'hispanic', 'female', 'lgbt', 'immigrants', 'disabled', 'poor']
     sorts = {"Title(A-Z)":"title", "Title(Z-A)":"-title", "Value Increasing":"value", "Value Decreasing":"-value", "Due Date":"dueDate"}
 
@@ -56,6 +87,28 @@ def search(request):
 @login_required(login_url='login')
 @user_passes_test(can_view_post)
 def submitForm(request,formcode=None):
+
+    """
+    Allow students to submit answers to a form
+
+    Args:
+
+    UUID: formcode (UUID to the question form)
+
+    **Context**
+        responseForm: A form that allows students to answer the questions that the organization asks
+        postForm: The post that is related to the question form, so we can display some information about it for the student
+
+        ``response ``
+            A new instance of a response object
+
+    **Template:**
+        :template:`response.html`
+        :template:`sucesss.html` (If the user can submit the form)
+        :template:`error.html` (If there is an issue with the user submitting the form, typically it is because they have already submitted for that scholarship)
+
+    """
+
     if formcode:
         #save the answer form response    
         if request.method == 'POST':
@@ -82,6 +135,23 @@ def submitForm(request,formcode=None):
 @login_required(login_url='login')
 @staff_member_required
 def createPost(request):
+    """
+    Create a question form for students to fill out
+
+
+    **Context**
+        postmForm: A post that students can find on the search page
+
+        ``post ``
+            A new instance of a post object
+
+    **Message**
+        Message that tells the user that they have successfully created a post
+
+    **Template:**
+        :template:`create_post.html`
+
+    """
 
     #save the organization's post
     if request.method == 'POST':
@@ -90,6 +160,7 @@ def createPost(request):
             filterList = ['everyone', 'black', 'hispanic', 'female', 'lgbt', 'immigrants', 'disabled', 'poor']    
             newpost = form.save()
 
+            #Add tags to the object only if in the filterlist
             tags = form.cleaned_data.get('tags')
             tags = [tag.lower() for tag in tags if tag.lower() in filterList]
 
@@ -108,11 +179,25 @@ def createPost(request):
 @login_required(login_url='login')
 @staff_member_required
 def createForm(request):
+    """
+    Create a question form for students to fill out
+
+    **Context**
+        QuestionFormForm: A form that allows organizations to ask 3 questions for students
+
+    **Message**
+        Message that contains the link to the question from so the organization can later use
+
+    **Template:**
+        :template:`scholarship.html`
+
+    """
     if request.method == 'POST':
         form = QuestionFormForm(request.POST)
         if form.is_valid():
             #return the uuid so the organization can use that link in the post to connect to the questionform
             formID = form.save().UUID
+            #send them the url for the form
             messages.success(request, 'You have made your question form accessible at: ' + request.build_absolute_uri('/post/') + f'apply/{formID}')
             context = {'form': form}
             return render(request, 'scholarship.html', context=context)
@@ -123,7 +208,20 @@ def createForm(request):
 @login_required(login_url='login')
 @staff_member_required
 def downloadResponse(request, formcode=None):
-    
+    """
+    Downloads the responses to a post
+
+    Args:
+
+    UUID: formcode (UUID to the question form)
+
+    **Template:**
+        :template:`download.html`
+
+    ***HttpResponse**
+        :text/csv:`An CSV file with infomation related to the user, submission date, and all their answers`
+
+    """
     if formcode !=None:
         response = HttpResponse(content_type='text/csv')
         responses = Response.objects.filter(form_id=formcode)

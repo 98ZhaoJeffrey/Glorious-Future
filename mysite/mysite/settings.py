@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'taggit',
     'widget_tweaks',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -80,18 +81,30 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'OPTIONS': {
-            'database':'ics4u',
-            'user':'testuser',
-            'password':'testpassword123',
-            'host': 'localhost',
-            'port': 3306
-        },
+if 'RDS_HOSTNAME' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'OPTIONS': {
+                'database':'ics4u',
+                'user':'testuser',
+                'password':'testpassword123',
+                'host': 'localhost',
+                'port': 3306
+            },
+        }
+    }
 
 TAGGIT_CASE_INSENSITIVE = True
 # Password validation
@@ -134,7 +147,7 @@ LOGOUT_REDIRECT_URL = 'index'
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles/")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 MEDIA_URL = "/media/"
@@ -146,3 +159,11 @@ STATICFILES_DIRS = [
 ]
 
 
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

@@ -144,3 +144,5 @@ cython_debug/
 mysite/media/
 
 .ebextensions
+
+staticfiles
