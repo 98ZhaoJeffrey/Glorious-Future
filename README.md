@@ -29,6 +29,8 @@ You will also need to supply your own .env file/database configurations to conne
 
 Run a local development server (Must be inside the directory with manage.py)
 ```python
+python manage.py makemigrations
+python manage.py migrate
 python manage.py runserver
 ```
 
