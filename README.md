@@ -7,6 +7,8 @@ When the website is pushed to AWS, the link will be included here
 
 ## Installation
 
+Pull the GitHub repo onto your computer
+
 Create a new virtual enviroment by running
 ```python
 python3 -m venv [yourVenvName]
@@ -20,25 +22,14 @@ We used MySQL, but you can change this inside the settings.py file to a database
 ```python
 'ENGINE': 'django.db.backends.mysql',
 ```
-You will also need to supply your own .env file to connect to your database
+You will also need to supply your own .env file/database configurations to connect to your database
 
-Alternatively, if you have Docker, you can pull the image here
-
-```docker
-docker pull [image name here]
-```
 
 ## Usage
 
 Run a local development server (Must be inside the directory with manage.py)
 ```python
 python manage.py runserver
-```
-
-Or if you used docker, run 
-
-```docker
-docker run [rest of the command]
 ```
 
 Open the local host link and explore
