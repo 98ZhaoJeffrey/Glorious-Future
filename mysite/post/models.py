@@ -22,6 +22,7 @@ class Post(models.Model):
     link = models.URLField()
     
     def __str__(self):
+        """Return the title of the post """
         return self.title
 
 

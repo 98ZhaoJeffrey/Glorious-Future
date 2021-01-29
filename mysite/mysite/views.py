@@ -1,41 +1,32 @@
 from django.shortcuts import render
 
 def index(request):
-    """Route for our homepage
-        
-    Parameters:
-    
-    None
+    """
+    Route for the index page
 
-    Returns:
+    **Template:**
+        :template:`base.html`
 
-    HTML page
     """
     return render(request, 'base.html')
 
 def about(request):
-    """Route for our about page
-        
-    Parameters:
-    
-    None
+    """
+    Route for the about page
 
-    Returns:
+    **Template:**
+        :template:`about.html`
 
-    HTML page
     """
     return render(request, 'about.html')
 
 def handle404Page(request):
-    """Route for our about page
-        
-    Parameters:
-    
-    None
+    """
+    Route everything that 404s here
 
-    Returns:
+    **Template:**
+        :template:`404.html`
 
-    HTML page
     """
     context={}
     response = render(request, "pages/errors/404.html", context=context)

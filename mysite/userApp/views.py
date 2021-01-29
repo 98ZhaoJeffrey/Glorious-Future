@@ -37,7 +37,7 @@ def signup(request):
 
 def logout(request):
     """
-    Check
+    Logout user
     **Redirect:**
 
     :`route:login`
