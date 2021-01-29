@@ -15,7 +15,12 @@
 
 <form method="post" action="{% url 'post' %}">
     {% csrf_token %}
-    <div class="container" style="width:40%; margin-top:40px">            
+    <div class="container" style="width:40%; margin-top:40px">  
+        {%for message in messages%}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+      {%endfor%}          
         <div class="mb-3">
             {{ form|crispy }}   
         </div>

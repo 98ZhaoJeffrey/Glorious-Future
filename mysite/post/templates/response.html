@@ -6,6 +6,10 @@
     {% csrf_token %}
     <div class="row justify-content-center">
         <div class="col-md-5 pt-3" style="margin-top: 40px; margin-bottom: 40px">
+            <h4 class="text-left">Post: {{post.title}}</h4>
+            <h4 class="text-left">Post description: {{post.description}}</h4>
+            <h4 class="text-left">Organization: {{post.organization}}</h4>
+            <h4 class="text-left">Value: {{post.value}}</h4>
             <div class="mb-3">
                 <label for="answer1" class="form-label">Question: {{form.question1}} (Max 1000 Char)</label>
                 <textarea class="form-control" name="answer1" rows="5"></textarea>

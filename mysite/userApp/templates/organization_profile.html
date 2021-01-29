@@ -1,0 +1,29 @@
+{% extends "base.html"%}
+
+{% block content %}
+
+<div class="container-fluid">
+    <h1>Welcome back {{user}}</h1>
+    <h3>To download your responses, take the end of the link to your form (After /apply/) and paste it at the end of the url after clicking on one of the post's button </h3>
+     
+    <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4" style="grid-gap: 1.5rem; justify-content: space-around;">
+      {% for post in posts %}
+        <div class="card" style="width: 18rem; padding:0px">
+          <img src="/media/{{post.photo}}" class="card-img-top" style="width:100%; height:250px;">
+          <div class="card-body">
+            <h5 class="card-title">{{post.title}}</h5> 
+            {% for tag in post.tags.all%}
+              <span class="badge bg-primary">{{tag}}</span>
+            {% endfor %}
+              <p class="card-text">Due date{{post.dueDate}}</p>
+              <p class="card-text">Total value: ${{post.value}}</p>
+              <p class="card-text">{{post.description}}</p>              
+              <p class="card-text">Link to form: {{post.link}}</p>
+              <a href="{%url 'download'%}" class="btn btn-primary" style="display:block;" target="_blank">Click to download</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+{%endblock%}

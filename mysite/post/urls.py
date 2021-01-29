@@ -8,6 +8,8 @@ urlpatterns=[
     path('apply/', views.submitForm, name='apply'),
     path('make-post', views.createPost, name='post'),
     path('make-form', views.createForm, name='form'),
+    path('responses/<uuid:formcode>/', views.downloadResponse, name='download'),
+    path('responses/', views.downloadResponse, name='download'),
 ]
 
 

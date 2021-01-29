@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<div class="row justify-content-center" style="position: relative; top: 250px;">
+    <h2 style= "text-align: center;">You have successfully finished this scholarship</h2>
+
+    <a class="btn btn-primary" role="button" style="width:35%; margin-top:2rem" href="{% url 'search' %}">Continue searching</a>
+</div>
+{% endblock %}

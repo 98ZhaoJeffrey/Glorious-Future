@@ -15,7 +15,9 @@
 
             <div class="dropdown" >
               <select class="form-select" aria-label="Default select example" name="filter" style="height: 50px;">
-                <option selected value="Everyone">{%if filter%}{{filter}}{%else%}Everyone{% endif %}</option>
+                {%if filter%}<option selected value="Default">{{filter}}</option>{% endif %}
+                <option value="Default">Default</option>
+                <option value="Everyone">Everyone</option>
                 <option value="Black">Black</option>
                 <option value="Hispanic">Hispanic</option>
                 <option value="Female">Female</option>
@@ -43,18 +45,18 @@
             </div>
       </div>
   </form>
-
   <div class="container-fluid">  
     <h3>Showing {{ page_obj.start_index }}-{{ page_obj.end_index }} of {{ page_obj.paginator.count }} Results</h3> 
     <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4" style="grid-gap: 1.5rem; justify-content: space-around;">
-      {% for post in result %}
+      {% for post in page_obj %}
         <div class="card" style="width: 18rem; padding:0px">
           <img src="/media/{{post.photo}}" class="card-img-top" style="width:100%; height:250px;">
           <div class="card-body">
             <h5 class="card-title">{{post.title}}</h5> 
-              <span class="badge bg-primary">tag1</span>
-              <span class="badge bg-primary">tag2</span>
-              <span class="badge bg-primary">tag3</span>
+            {% for tag in post.tags.all%}
+              <span class="badge bg-primary">{{tag}}</span>
+            {% endfor %}
+              <p class="card-text">Due date{{post.dueDate}}</p>
               <p class="card-text">Total value: ${{post.value}}</p>
               <p class="card-text">{{post.description}}</p>
               <a href="{{post.link}}" class="btn btn-primary" style="display:block;" target="_blank">Click to apply</a>

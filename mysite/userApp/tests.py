@@ -12,8 +12,8 @@ class UserTest(TestCase):
     def test_student_users_can_view_post(self):
         """Only students and admins can return true"""
         s = User.objects.get(id=1)
-    
         self.assertEqual(s.can_view_post(), True)
+    
     def test_organization_users_can_view_post(self):
         """Only students and admins can return true"""
         o = User.objects.get(id=2)

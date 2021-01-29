@@ -1,0 +1,18 @@
+{% extends "base.html"%}
+{% load static %}
+{% block content %}
+
+<div class="d-flex justify-content-around" style="position: relative; top: 100px;">
+    <div>
+        <h1>Welcome back {{user}}</h1>
+
+        <h3>You have applied to a total of {{count}} scholarships worth {{total}} dollars</h3>
+
+        <h3>Continue on your way to a financially safe future</h3>
+        
+        <a class="btn btn-primary" role="button" style="width:70%; margin-top:2rem; margin-bottom:2rem" href="{% url 'search' %}">Continue searching</a>
+        <img src="{% static 'images/search_image.svg'%}">
+    </div>
+</div>
+    
+{%endblock%}
